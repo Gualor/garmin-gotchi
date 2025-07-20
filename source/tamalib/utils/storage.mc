@@ -1,34 +1,37 @@
+#include "tamalib/utils/cast.h"
+#include "tamalib/cpu.h"
+
 using Toybox.Application as app;
 using Toybox.Lang as std;
 
 module tamalib {
 
-const STORAGE_KEY_PC                        = "pc";
-const STORAGE_KEY_X                         = "x";
-const STORAGE_KEY_Y                         = "y";
-const STORAGE_KEY_A                         = "a";
-const STORAGE_KEY_B                         = "b";
-const STORAGE_KEY_NP                        = "np";
-const STORAGE_KEY_SP                        = "sp";
-const STORAGE_KEY_FLAGS                     = "flags";
-const STORAGE_KEY_TICK_COUNTER              = "tick_counter";
-const STORAGE_KEY_CLK_TIMER_2HZ_TIMESTAMP   = "clk_timer_2hz_timestamp";
-const STORAGE_KEY_CLK_TIMER_4HZ_TIMESTAMP   = "clk_timer_4hz_timestamp";
-const STORAGE_KEY_CLK_TIMER_8HZ_TIMESTAMP   = "clk_timer_8hz_timestamp";
-const STORAGE_KEY_CLK_TIMER_16HZ_TIMESTAMP  = "clk_timer_16hz_timestamp";
-const STORAGE_KEY_CLK_TIMER_32HZ_TIMESTAMP  = "clk_timer_32hz_timestamp";
-const STORAGE_KEY_CLK_TIMER_64HZ_TIMESTAMP  = "clk_timer_64hz_timestamp";
-const STORAGE_KEY_CLK_TIMER_128HZ_TIMESTAMP = "clk_timer_128hz_timestamp";
-const STORAGE_KEY_CLK_TIMER_256HZ_TIMESTAMP = "clk_timer_256hz_timestamp";
-const STORAGE_KEY_PROG_TIMER_TIMESTAMP      = "prog_timer_timestamp";
-const STORAGE_KEY_PROG_TIMER_ENABLED        = "prog_timer_enabled";
-const STORAGE_KEY_PROG_TIMER_DATA           = "prog_timer_data";
-const STORAGE_KEY_PROG_TIMER_RLD            = "prog_timer_rld";
-const STORAGE_KEY_CALL_DEPTH                = "call_depth";
-const STORAGE_KEY_INTERRUPTS                = "interrupts";
-const STORAGE_KEY_MEMORY_RAM                = "memory_ram";
-const STORAGE_KEY_MEMORY_IO                 = "memory_io";
-const STORAGE_KEY_STATE_SAVED               = "state_saved";
+#define STORAGE_KEY_PC                        "pc"
+#define STORAGE_KEY_X                         "x"
+#define STORAGE_KEY_Y                         "y"
+#define STORAGE_KEY_A                         "a"
+#define STORAGE_KEY_B                         "b"
+#define STORAGE_KEY_NP                        "np"
+#define STORAGE_KEY_SP                        "sp"
+#define STORAGE_KEY_FLAGS                     "flags"
+#define STORAGE_KEY_TICK_COUNTER              "tick_counter"
+#define STORAGE_KEY_CLK_TIMER_2HZ_TIMESTAMP   "clk_timer_2hz_timestamp"
+#define STORAGE_KEY_CLK_TIMER_4HZ_TIMESTAMP   "clk_timer_4hz_timestamp"
+#define STORAGE_KEY_CLK_TIMER_8HZ_TIMESTAMP   "clk_timer_8hz_timestamp"
+#define STORAGE_KEY_CLK_TIMER_16HZ_TIMESTAMP  "clk_timer_16hz_timestamp"
+#define STORAGE_KEY_CLK_TIMER_32HZ_TIMESTAMP  "clk_timer_32hz_timestamp"
+#define STORAGE_KEY_CLK_TIMER_64HZ_TIMESTAMP  "clk_timer_64hz_timestamp"
+#define STORAGE_KEY_CLK_TIMER_128HZ_TIMESTAMP "clk_timer_128hz_timestamp"
+#define STORAGE_KEY_CLK_TIMER_256HZ_TIMESTAMP "clk_timer_256hz_timestamp"
+#define STORAGE_KEY_PROG_TIMER_TIMESTAMP      "prog_timer_timestamp"
+#define STORAGE_KEY_PROG_TIMER_ENABLED        "prog_timer_enabled"
+#define STORAGE_KEY_PROG_TIMER_DATA           "prog_timer_data"
+#define STORAGE_KEY_PROG_TIMER_RLD            "prog_timer_rld"
+#define STORAGE_KEY_CALL_DEPTH                "call_depth"
+#define STORAGE_KEY_INTERRUPTS                "interrupts"
+#define STORAGE_KEY_MEMORY_RAM                "memory_ram"
+#define STORAGE_KEY_MEMORY_IO                 "memory_io"
+#define STORAGE_KEY_STATE_SAVED               "state_saved"
 
 function save_state(state as CPUState) as Void {
     set_state_saved(false);
@@ -92,7 +95,7 @@ function save_state_interrupts(state as CPUState) as Void {
         encodings[i] = (0x0000 as U32
             |     (interrupts[i].factor_flag_reg << 24)
             |     (interrupts[i].mask_reg        << 16)
-            | (int(interrupts[i].triggered)      <<  8)
+            | (INT(interrupts[i].triggered)      <<  8)
             |     (interrupts[i].vector          <<  0)
         );
     }
@@ -153,7 +156,7 @@ function load_state_interrupts(state as CPUState) as Void {
     for (var i = 0; i < INT_SLOT_NUM; i++) {
         interrupts[i].factor_flag_reg = ((encodings[i] >> 24) & 0x0F);
         interrupts[i].mask_reg =        ((encodings[i] >> 16) & 0x0F);
-        interrupts[i].triggered =   bool((encodings[i] >>  8) & 0x01);
+        interrupts[i].triggered =   BOOL((encodings[i] >>  8) & 0x01);
         interrupts[i].vector =          ((encodings[i] >>  0) & 0xFF);
     }
 }

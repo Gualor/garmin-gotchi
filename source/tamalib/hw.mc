@@ -20,11 +20,6 @@
 
 module tamalib {
 
-const LCD_WIDTH = 32;
-const LCD_HEIGHT = 16;
-
-const ICON_NUM = 8;
-
 enum ButtonState {
     BTN_STATE_RELEASED = 0,
     BTN_STATE_PRESSED,

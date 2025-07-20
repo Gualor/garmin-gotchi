@@ -1,3 +1,6 @@
+#include "tamalib/utils/cast.h"
+#include "tamalib/utils/math.h"
+
 using Toybox.Graphics as gfx;
 
 module tamalib {
@@ -17,10 +20,10 @@ class Circle {
 }
 
 function bbox_to_circle(box as gfx.BoundingBox) as Circle {
-    var r = float(box.width) / 2;
+    var r = FLOAT(box.width) / 2;
     var x = (box.x as Int) + r;
     var y = (box.y as Int) + r;
-    return new Circle(round(x), round(y), round(r));
+    return new Circle(ROUND(x), ROUND(y), ROUND(r));
 }
 
 class Rect {

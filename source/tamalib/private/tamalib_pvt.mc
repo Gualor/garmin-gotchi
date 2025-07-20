@@ -18,11 +18,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+#include "tamalib/utils/cast.h"
+
 module tamalib {
 
 class Tamalib_impl {
 
-    const DEFAULT_FRAMERATE = 30; // fps
+    #define DEFAULT_FRAMERATE 30 // fps
 
     var exec_mode as ExecMode = EXEC_MODE_RUN;
     var step_depth as U32 = 0;
@@ -74,7 +76,7 @@ class Tamalib_impl {
             return;
         }
 
-        if (bool(g_cpu.step())) {
+        if (BOOL(g_cpu.step())) {
             exec_mode = EXEC_MODE_PAUSE;
             step_depth = g_cpu.get_depth();
         } else {
@@ -114,7 +116,7 @@ class Tamalib_impl {
     function mainloop() as Void {
         var ts;
 
-        while (!bool(g_hal.handler())) {
+        while (!BOOL(g_hal.handler())) {
             step();
 
             /* Update the screen @ g_framerate fps */

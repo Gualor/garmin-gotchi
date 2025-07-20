@@ -2,7 +2,7 @@ project.manifest = manifest.xml
 project.optimization = 3p,enable-constant-folding,enable-empty-function-removal,enable-lexical-only-constants,enable-static-branch-elimination
 project.typecheck = strict
 
-base.sourcePath = source
+base.sourcePath = bin/source
 
 # NOTE: for each build option, only one line must remain uncommented at a time,
 #       uncomment the option you want to exclude from the build

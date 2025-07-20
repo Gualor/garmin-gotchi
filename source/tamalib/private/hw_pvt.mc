@@ -18,6 +18,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+#include "tamalib/utils/cast.h"
+#include "tamalib/hw.h"
+
 module tamalib {
 
 class HW_impl {
@@ -53,7 +56,7 @@ class HW_impl {
 
     function set_lcd_pin(seg as U8, com as U8, val as U8) as Void {
         if (SEG_POS[seg] < LCD_WIDTH) {
-            g_hal.set_lcd_matrix(SEG_POS[seg], com, bool(val));
+            g_hal.set_lcd_matrix(SEG_POS[seg], com, BOOL(val));
         } else {
             /*
             * IC n -> seg-com|...
@@ -67,9 +70,9 @@ class HW_impl {
             * IC 7 -> 28-15|38-12|39-13
             */
             if (seg == 8 && com < 4) {
-                g_hal.set_lcd_icon(com, bool(val));
+                g_hal.set_lcd_icon(com, BOOL(val));
             } else if (seg == 28 && com >= 12) {
-                g_hal.set_lcd_icon(com - 8, bool(val));
+                g_hal.set_lcd_icon(com - 8, BOOL(val));
             }
         }
     }

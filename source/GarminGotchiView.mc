@@ -1,3 +1,6 @@
+#include "tamalib/utils/cast.h"
+#include "tamalib/hw.h"
+
 using Toybox.Application as app;
 using Toybox.Graphics as gfx;
 using Toybox.WatchUi as ui;
@@ -48,9 +51,9 @@ class GarminGotchiView extends ui.View {
         SCREEN = new tama.Rect(0, 0, dc.getWidth(), dc.getHeight());
         SUBSCREEN_RECT = tama.bbox_to_rect(ui.getSubscreen() as gfx.BoundingBox);
         SUBSCREEN_CIRCLE = tama.bbox_to_circle(ui.getSubscreen() as gfx.BoundingBox);
-        PIXEL_SIZE = tama.min(SCREEN.width / tama.LCD_WIDTH, SCREEN.height / tama.LCD_HEIGHT) as tama.Int;
-        var MATRIX_WIDTH = tama.min(SCREEN.width, tama.LCD_WIDTH * PIXEL_SIZE) as tama.Int;
-        var MATRIX_HEIGHT = tama.min(SCREEN.height, tama.LCD_HEIGHT * PIXEL_SIZE) as tama.Int;
+        PIXEL_SIZE = tama.min(SCREEN.width / LCD_WIDTH, SCREEN.height / LCD_HEIGHT) as tama.Int;
+        var MATRIX_WIDTH = tama.min(SCREEN.width, LCD_WIDTH * PIXEL_SIZE) as tama.Int;
+        var MATRIX_HEIGHT = tama.min(SCREEN.height, LCD_HEIGHT * PIXEL_SIZE) as tama.Int;
         MATRIX = new tama.Rect(
             (SCREEN.width - MATRIX_WIDTH) / 2,
             (SCREEN.height - MATRIX_HEIGHT) / 2,
@@ -90,9 +93,9 @@ class GarminGotchiView extends ui.View {
     }
 
     function draw_matrix(dc as gfx.Dc) as Void {
-        for (var x = 0; x < tama.LCD_WIDTH; x++) {
-            for (var y = 0; y < tama.LCD_HEIGHT; y++) {
-                if (tama.bool(game.matrix[x + y * tama.LCD_WIDTH])) {
+        for (var x = 0; x < LCD_WIDTH; x++) {
+            for (var y = 0; y < LCD_HEIGHT; y++) {
+                if (BOOL(game.matrix[x + y * LCD_WIDTH])) {
                     draw_pixel(dc, x, y);
                 }
             }

@@ -1,3 +1,6 @@
+#include "tamalib/utils/cast.h"
+#include "tamalib/hw.h"
+
 using Toybox.Application as app;
 using Toybox.Attention as att;
 using Toybox.System as sys;
@@ -39,8 +42,8 @@ class GarminGotchiApp extends app.AppBase {
 
     var emulator as tama.Tamalib = new tama.Tamalib_impl() as tama.Tamalib;
     var breakpoints as tama.Breakpoints? = null;
-    var matrix as tama.Bytes = new [tama.LCD_WIDTH * tama.LCD_HEIGHT]b;
-    var icons as tama.Bytes = new [tama.ICON_NUM]b;
+    var matrix as tama.Bytes = new [LCD_WIDTH * LCD_HEIGHT]b;
+    var icons as tama.Bytes = new [ICON_NUM]b;
 
     var update_screen_counter as tama.Int = 0;
     var update_screen_request as tama.Bool = true;
@@ -73,10 +76,10 @@ class GarminGotchiApp extends app.AppBase {
 
     function reset() as Void {
         breakpoints = null;
-        for (var i = 0; i < tama.LCD_WIDTH * tama.LCD_HEIGHT; i++) {
+        for (var i = 0; i < LCD_WIDTH * LCD_HEIGHT; i++) {
             matrix[i] = 0;
         }
-        for (var i = 0; i < tama.ICON_NUM; i++) {
+        for (var i = 0; i < ICON_NUM; i++) {
             icons[i] = 0;
         }
         start_time = sys.getTimer();
@@ -149,7 +152,7 @@ class GarminGotchiApp extends app.AppBase {
 
     (:disable_log) function is_log_enabled(level as tama.LogLevel) as tama.Bool { return false; }
     (:enable_log)  function is_log_enabled(level as tama.LogLevel) as tama.Bool {
-        return tama.bool(LOG_LEVEL_FLAGS & (level as tama.Int));
+        return BOOL(LOG_LEVEL_FLAGS & (level as tama.Int));
     }
 
     (:disable_log) function log(level as tama.LogLevel, buff as tama.String, args as tama.Objects) as Void {}
@@ -177,17 +180,17 @@ class GarminGotchiApp extends app.AppBase {
     }
 
     function set_lcd_matrix(x as tama.U8, y as tama.U8, val as tama.Bool) as Void {
-        var old_val = matrix[x + y * tama.LCD_WIDTH];
-        var new_val = tama.int(val);
+        var old_val = matrix[x + y * LCD_WIDTH];
+        var new_val = INT(val);
         if (old_val != new_val) {
             update_screen_request = true;
-            matrix[x + y * tama.LCD_WIDTH] = new_val;
+            matrix[x + y * LCD_WIDTH] = new_val;
         }
     }
 
     function set_lcd_icon(icon as tama.U8, val as tama.Bool) as Void {
         var old_val = icons[icon];
-        var new_val = tama.int(val);
+        var new_val = INT(val);
         if (old_val != new_val) {
             update_screen_request = true;
             icons[icon] = new_val;
